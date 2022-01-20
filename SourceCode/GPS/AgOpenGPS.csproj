@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Resource.Embedder.2.1.1\build\Resource.Embedder.props" Condition="Exists('..\packages\Resource.Embedder.2.1.1\build\Resource.Embedder.props')" />
+  <Import Project="\..\packages\Resource.Embedder.2.1.1\build\Resource.Embedder.props" Condition="Exists('\..\packages\Resource.Embedder.2.1.1\build\Resource.Embedder.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -872,7 +872,7 @@
     <None Include="btnImages\AntennaTractor.png" />
     <None Include="btnImages\RadiusWheelBase.png" />
     <None Include="btnImages\AgIO.png" />
-    <None Include="btnImages\first.png" />
+    <None Include="btnImages\First.png" />
     <None Include="btnImages\Config\Con_ImplementMenu.png" />
     <None Include="btnImages\Config\Con_ModulesMenu.png" />
     <None Include="btnImages\Config\Con_SourcesMenu.png" />
@@ -1032,7 +1032,7 @@
     <None Include="btnImages\Settings64.png" />
     <None Include="btnImages\Custom.png" />
     <None Include="btnImages\UDPConfig.png" />
-    <None Include="btnImages\Youturn80.png" />
+    <None Include="btnImages\YouTurn80.png" />
     <None Include="btnImages\PointDelete.png" />
     <None Include="btnImages\PointDone.png" />
     <None Include="btnImages\PointStart.png" />

@@ -624,7 +624,7 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackgroundImage = global::AgIO.Properties.Resources.satellite;
+            this.pictureBox4.BackgroundImage = global::AgIO.Properties.Resources.Satellite;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox4.Location = new System.Drawing.Point(36, 28);
             this.pictureBox4.Name = "pictureBox4";

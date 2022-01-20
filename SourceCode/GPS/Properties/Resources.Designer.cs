@@ -1262,9 +1262,9 @@ namespace AgOpenGPS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ConU_UTurnSmooth {
+        internal static System.Drawing.Bitmap ConU_UturnSmooth {
             get {
-                object obj = ResourceManager.GetObject("ConU_UTurnSmooth", resourceCulture);
+                object obj = ResourceManager.GetObject("ConU_UturnSmooth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1572,9 +1572,9 @@ namespace AgOpenGPS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap first {
+        internal static System.Drawing.Bitmap First {
             get {
-                object obj = ResourceManager.GetObject("first", resourceCulture);
+                object obj = ResourceManager.GetObject("First", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

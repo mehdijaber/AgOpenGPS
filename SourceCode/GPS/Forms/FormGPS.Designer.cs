@@ -2123,7 +2123,7 @@
             // pictureboxStart
             // 
             this.pictureboxStart.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pictureboxStart.BackgroundImage = global::AgOpenGPS.Properties.Resources.first;
+            this.pictureboxStart.BackgroundImage = global::AgOpenGPS.Properties.Resources.First;
             this.pictureboxStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureboxStart.Location = new System.Drawing.Point(748, 482);
             this.pictureboxStart.Name = "pictureboxStart";

@@ -75,13 +75,13 @@
     <Compile Include="Forms\FormCommPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCommPicker.designer.cs">
+    <Compile Include="Forms\FormCommPicker.Designer.cs">
       <DependentUpon>FormCommPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormCommSaver.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCommSaver.designer.cs">
+    <Compile Include="Forms\FormCommSaver.Designer.cs">
       <DependentUpon>FormCommSaver.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormCommSetGPS.cs">
@@ -99,7 +99,7 @@
     <Compile Include="Forms\FormKeyboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormKeyboard.designer.cs">
+    <Compile Include="Forms\FormKeyboard.Designer.cs">
       <DependentUpon>FormKeyboard.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormLoop.cs">
@@ -132,25 +132,25 @@
     <Compile Include="Forms\FormNumeric.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormNumeric.designer.cs">
+    <Compile Include="Forms\FormNumeric.Designer.cs">
       <DependentUpon>FormNumeric.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormSource.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormSource.designer.cs">
+    <Compile Include="Forms\FormSource.Designer.cs">
       <DependentUpon>FormSource.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormTimedMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormTimedMessage.designer.cs">
+    <Compile Include="Forms\FormTimedMessage.Designer.cs">
       <DependentUpon>FormTimedMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormUDP.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormUDP.designer.cs">
+    <Compile Include="Forms\FormUDP.Designer.cs">
       <DependentUpon>FormUDP.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -291,7 +291,7 @@
     <None Include="btnImages\B_Autosteer.png" />
     <None Include="btnImages\B_AoG.png" />
     <None Include="btnImages\InOut.png" />
-    <None Include="btnImages\satellite.png" />
+    <None Include="btnImages\Satellite.png" />
     <None Include="btnImages\Com_Module2.png" />
     <None Include="btnImages\Com_IMUModule.png" />
     <None Include="btnImages\Com_AutosteerModule.png" />

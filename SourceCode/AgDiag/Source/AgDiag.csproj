@@ -71,7 +71,7 @@
     <Compile Include="Forms\FormTimedMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormTimedMessage.designer.cs">
+    <Compile Include="Forms\FormTimedMessage.Designer.cs">
       <DependentUpon>FormTimedMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />

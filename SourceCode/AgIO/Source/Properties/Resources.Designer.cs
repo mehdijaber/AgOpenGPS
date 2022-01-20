@@ -333,9 +333,9 @@ namespace AgIO.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap satellite {
+        internal static System.Drawing.Bitmap Satellite {
             get {
-                object obj = ResourceManager.GetObject("satellite", resourceCulture);
+                object obj = ResourceManager.GetObject("Satellite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
