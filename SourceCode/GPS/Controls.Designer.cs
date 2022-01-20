@@ -2464,7 +2464,7 @@ namespace AgOpenGPS
                 FileSaveFlagsKML();
 
                 //Process.Start(@"C:\Program Files (x86)\Google\Google Earth\client\googleearth", workingDirectory + currentFieldDirectory + "\\Flags.KML");
-                Process.Start(fieldsDirectory + currentFieldDirectory + "\\Flags.KML");
+                Process.Start(Path.Combine(fieldsDirectory, currentFieldDirectory, "Flags.KML");
             }
             else
             {
@@ -2979,7 +2979,7 @@ namespace AgOpenGPS
                 FileSaveSingleFlagKML(flagNumberPicked);
 
                 //Process.Start(@"C:\Program Files (x86)\Google\Google Earth\client\googleearth", workingDirectory + currentFieldDirectory + "\\Flags.KML");
-                Process.Start(fieldsDirectory + currentFieldDirectory + "\\Flag.KML");
+                Process.Start(Path.Combine(fieldsDirectory, currentFieldDirectory, "Flag.KML");
             }
         }
 

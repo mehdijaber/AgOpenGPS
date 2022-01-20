@@ -320,7 +320,6 @@ namespace AgOpenGPS
             if (cboxAddTime.Checked) mf.currentFieldDirectory += " " + DateTime.Now.ToString("HH_mm", CultureInfo.InvariantCulture);
 
             //get the directory and make sure it exists, create if not
-            string dirNewField = mf.fieldsDirectory + mf.currentFieldDirectory + "\\";
 
             mf.menustripLanguage.Enabled = false;
             //if no template set just make a new file.
@@ -330,7 +329,7 @@ namespace AgOpenGPS
                 mf.JobNew();
 
                 //create it for first save
-                string directoryName = Path.GetDirectoryName(dirNewField);
+                string directoryName = Path.Combine(mf.fieldsDirectory, mf.currentFieldDirectory);
 
                 if ((!string.IsNullOrEmpty(directoryName)) && (Directory.Exists(directoryName)))
                 {
@@ -369,18 +368,16 @@ namespace AgOpenGPS
                         { form.Show(this); }
                         return;
                     }
-                    string myFileName, dirField;
 
                     //get the directory and make sure it exists, create if not
-                    dirField = mf.fieldsDirectory + mf.currentFieldDirectory + "\\";
-                    directoryName = Path.GetDirectoryName(dirField);
+                    directoryName = Path.Combine(mf.fieldsDirectory, mf.currentFieldDirectory);
 
                     if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
                     { Directory.CreateDirectory(directoryName); }
 
-                    myFileName = "Field.txt";
+                    string myFileName = "Field.txt";
 
-                    using (StreamWriter writer = new StreamWriter(dirField + myFileName))
+                    using (StreamWriter writer = new StreamWriter(Path.Combine(directoryName, myFileName)))
                     {
                         //Write out the date
                         writer.WriteLine(DateTime.Now.ToString("yyyy-MMMM-dd hh:mm:ss tt", CultureInfo.InvariantCulture));

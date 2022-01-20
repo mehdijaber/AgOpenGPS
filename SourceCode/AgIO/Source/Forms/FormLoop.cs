@@ -38,11 +38,11 @@ namespace AgIO
         private void FormLoop_Load(object sender, EventArgs e)
         {
             if (Settings.Default.setF_workingDirectory == "Default")
-                baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\AgOpenGPS\\";
-            else baseDirectory = Settings.Default.setF_workingDirectory + "\\AgOpenGPS\\";
+                baseDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AgOpenGPS");
+            else baseDirectory = Path.Combine(Settings.Default.setF_workingDirectory, "AgOpenGPS");
 
             //get the fields directory, if not exist, create
-            commDirectory = baseDirectory + "AgIO\\";
+            commDirectory = Path.Combine(baseDirectory, "AgIO");
             string dir = Path.GetDirectoryName(commDirectory);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
 
@@ -359,8 +359,7 @@ namespace AgIO
             {
                 //Start application here
                 DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-                string strPath = di.ToString();
-                strPath += "\\AgDiag.exe";
+                string strPath = Path.Combine(di.ToString(), "AgDiag.exe");
                 //TimedMessageBox(8000, "No File Found", strPath);
 
                 try

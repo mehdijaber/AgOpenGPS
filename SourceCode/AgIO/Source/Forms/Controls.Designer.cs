@@ -163,8 +163,7 @@ namespace AgIO
             {
                 //Start application here
                 DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-                string strPath = di.ToString();
-                strPath += "\\AgOpenGPS.exe";
+                string strPath = Path.Combine(di.ToString(), "AgOpenGPS.exe");
                 //TimedMessageBox(8000, "No File Found", strPath);
 
                 try
@@ -195,10 +194,9 @@ namespace AgIO
         {
 
             DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-            string strPath = di.ToString();
+            string strPath = Path.Combine(di.ToString(), "Drive.exe");
             try
             {
-                strPath += "\\Drive.exe";
                 Process.Start(strPath);
             }
             catch

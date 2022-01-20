@@ -39,7 +39,7 @@ namespace AgOpenGPS
                 double lonStart = 0;
                 double distance = 0;
                 string fieldDirectory = Path.GetFileName(dir);
-                string filename = dir + "\\Field.txt";
+                string filename = Path.Combine(dir, "Field.txt");
                 string line;
 
                 //make sure directory has a field.txt in it
@@ -95,7 +95,7 @@ namespace AgOpenGPS
                 else continue;
 
                 //grab the boundary area
-                filename = dir + "\\Boundary.txt";
+                filename = Path.Combine(dir, "Boundary.txt");
                 if (File.Exists(filename))
                 {
                     List<vec3> pointList = new List<vec3>();
@@ -181,7 +181,7 @@ namespace AgOpenGPS
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                filename = dir + "\\Field.txt";
+                filename = Path.Combine(dir, "Field.txt");
             }
 
             for (int i = 0; i < fileList.Count; i += 3)
@@ -297,8 +297,8 @@ namespace AgOpenGPS
                 }
                 else
                 {
-                    if (order == 0) mf.filePickerFileAndDirectory = (mf.fieldsDirectory + lvLines.SelectedItems[0].SubItems[0].Text + "\\Field.txt");
-                    else mf.filePickerFileAndDirectory = (mf.fieldsDirectory + lvLines.SelectedItems[0].SubItems[1].Text + "\\Field.txt");
+                    if (order == 0) mf.filePickerFileAndDirectory = Path.Combine(mf.fieldsDirectory, lvLines.SelectedItems[0].SubItems[0].Text, "Field.txt");
+                    else mf.filePickerFileAndDirectory = Path.Combine(mf.fieldsDirectory, lvLines.SelectedItems[0].SubItems[1].Text, "Field.txt");
                     Close();
                 }
             }
@@ -344,7 +344,7 @@ namespace AgOpenGPS
                 double lonStart = 0;
                 double distance = 0;
                 string fieldDirectory = Path.GetFileName(dir);
-                string filename = dir + "\\Field.txt";
+                string filename = Path.Combine(dir, "Field.txt");
                 string line;
 
                 //make sure directory has a field.txt in it
@@ -399,7 +399,7 @@ namespace AgOpenGPS
                 }
 
                 //grab the boundary area
-                filename = dir + "\\Boundary.txt";
+                filename = Path.Combine(dir, "Boundary.txt");
                 if (File.Exists(filename))
                 {
                     List<vec3> pointList = new List<vec3>();
@@ -485,7 +485,7 @@ namespace AgOpenGPS
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                filename = dir + "\\Field.txt";
+                filename = Path.Combine(dir, "Field.txt");
             }
 
             lvLines.Items.Clear();

@@ -760,9 +760,7 @@ namespace AgOpenGPS
             if (processName.Length == 0)
             {
                 //Start application here
-                DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-                string strPath = di.ToString();
-                strPath += "\\AgIO.exe";
+                string strPath = Path.Combine(Application.StartupPath, "AgIO.exe");
                 try
                 {
                     //TimedMessageBox(2000, "Please Wait", "Starting AgIO");
@@ -770,7 +768,7 @@ namespace AgOpenGPS
                     processInfo.FileName = strPath;
                     //processInfo.ErrorDialog = true;
                     //processInfo.UseShellExecute = false;
-                    processInfo.WorkingDirectory = Path.GetDirectoryName(strPath);
+                    processInfo.WorkingDirectory = Application.StartupPath;
                     Process proc = Process.Start(processInfo);
                 }
                 catch
@@ -2205,7 +2203,7 @@ namespace AgOpenGPS
                 FileSaveSingleFlagKML(flagNumberPicked);
 
                 //Process.Start(@"C:\Program Files (x86)\Google\Google Earth\client\googleearth", workingDirectory + currentFieldDirectory + "\\Flags.KML");
-                Process.Start(fieldsDirectory + currentFieldDirectory + "\\Flag.KML");
+                Process.Start(Path.Combine(fieldsDirectory, currentFieldDirectory, "Flag.KML"));
             }
         }
 

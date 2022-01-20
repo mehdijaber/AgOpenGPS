@@ -38,7 +38,7 @@ namespace AgOpenGPS
             foreach (string dir in dirs)
             {
                 string fieldDirectory = Path.GetFileName(dir);
-                string filename = dir + "\\Field.txt";
+                string filename = Path.Combine(dir, "Field.txt");
                 string line;
 
                 //make sure directory has a field.txt in it

@@ -407,22 +407,22 @@ namespace AgOpenGPS
 
 
             if (Settings.Default.setF_workingDirectory == "Default")
-                baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\AgOpenGPS\\";
-            else baseDirectory = Settings.Default.setF_workingDirectory + "\\AgOpenGPS\\";
+                baseDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AgOpenGPS");
+            else baseDirectory = Path.Combine(Settings.Default.setF_workingDirectory, "AgOpenGPS");
 
             //get the fields directory, if not exist, create
-            fieldsDirectory = baseDirectory + "Fields\\";
-            string dir = Path.GetDirectoryName(fieldsDirectory);
+            fieldsDirectory = Path.Combine(baseDirectory, "Fields");
+            string dir = fieldsDirectory;
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
 
             //get the fields directory, if not exist, create
-            vehiclesDirectory = baseDirectory + "Vehicles\\";
-            dir = Path.GetDirectoryName(vehiclesDirectory);
+            vehiclesDirectory = Path.Combine(baseDirectory, "Vehicles");
+            dir = vehiclesDirectory;
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
 
             //get the abLines directory, if not exist, create
-            ablinesDirectory = baseDirectory + "ABLines\\";
-            dir = Path.GetDirectoryName(fieldsDirectory);
+            ablinesDirectory = Path.Combine(baseDirectory, "ABLines");
+            dir = ablinesDirectory;
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
 
             //make sure current field directory exists, null if not
@@ -431,7 +431,7 @@ namespace AgOpenGPS
             string curDir;
             if (currentFieldDirectory != "")
             {
-                curDir = fieldsDirectory + currentFieldDirectory + "//";
+                curDir = Path.Combine(fieldsDirectory, currentFieldDirectory);
                 dir = Path.GetDirectoryName(curDir);
                 if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 {
@@ -463,15 +463,13 @@ namespace AgOpenGPS
             if (processName.Length == 0)
             {
                 //Start application here
-                DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-                string strPath = di.ToString();
-                strPath += "\\AgIO.exe";
+                string strPath = Path.Combine(Application.StartupPath, "AgIO.exe");
                 try
                 {
                     ProcessStartInfo processInfo = new ProcessStartInfo
                     {
                         FileName = strPath,
-                        WorkingDirectory = Path.GetDirectoryName(strPath)
+                        WorkingDirectory = Application.StartupPath
                     };
                     Process proc = Process.Start(processInfo);
                 }
@@ -575,7 +573,7 @@ namespace AgOpenGPS
             }
 
             //save current vehicle
-            SettingsIO.ExportAll(vehiclesDirectory + vehicleFileName + ".XML");
+            SettingsIO.ExportAll(Path.Combine(vehiclesDirectory, vehicleFileName + ".XML"));
         }
 
         //called everytime window is resized, clean up button positions
@@ -1357,7 +1355,7 @@ namespace AgOpenGPS
                 //string strPath = Application.StartupPath;
 
                 //Write out the error appending to existing
-                File.AppendAllText(baseDirectory + "\\" + strFileName, strErrorText + " - " +
+                File.AppendAllText(Path.Combine(baseDirectory, strFileName), strErrorText + " - " +
                     DateTime.Now.ToString() + "\r\n\r\n");
             }
             catch (Exception ex)
