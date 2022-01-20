@@ -52,22 +52,22 @@ namespace AgIO
         public bool wasIMUConnectedLastRun = false;
 
         //serial port gps is connected to
-        public SerialPort spGPS = new SerialPort(portNameGPS, baudRateGPS, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spGPS = new EnhancedSerialPort(portNameGPS, baudRateGPS, Parity.None, 8, StopBits.One);
 
         //serial port gps2 is connected to
-        public SerialPort spGPS2 = new SerialPort(portNameGPS2, baudRateGPS2, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spGPS2 = new EnhancedSerialPort(portNameGPS2, baudRateGPS2, Parity.None, 8, StopBits.One);
 
         //serial port Arduino is connected to
-        public SerialPort spIMU = new SerialPort(portNameIMU, baudRateIMU, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spIMU = new EnhancedSerialPort(portNameIMU, baudRateIMU, Parity.None, 8, StopBits.One);
 
         //serial port Arduino is connected to
-        public SerialPort spModule1 = new SerialPort(portNameModule1, baudRateModule1, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spModule1 = new EnhancedSerialPort(portNameModule1, baudRateModule1, Parity.None, 8, StopBits.One);
 
         //serial port Arduino is connected to
-        public SerialPort spModule2 = new SerialPort(portNameModule2, baudRateModule2, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spModule2 = new EnhancedSerialPort(portNameModule2, baudRateModule2, Parity.None, 8, StopBits.One);
 
         //serial port Ardiuno is connected to
-        public SerialPort spModule3 = new SerialPort(portNameModule3, baudRateModule3, Parity.None, 8, StopBits.One);
+        public EnhancedSerialPort spModule3 = new EnhancedSerialPort(portNameModule3, baudRateModule3, Parity.None, 8, StopBits.One);
         
         //lists for parsing incoming bytes
         private byte[] pgnModule1 = new byte[22];
@@ -969,8 +969,9 @@ namespace AgIO
             }
 
             try { spGPS.Open(); }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
             }
 
             if (spGPS.IsOpen)

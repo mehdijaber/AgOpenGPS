@@ -126,7 +126,7 @@ namespace AgIO
             }
 
             // Setup and open serial port
-            mf.spRadio = new SerialPort(cboxRadioPort.Text, int.Parse(cboxBaud.Text));
+            mf.spRadio = new EnhancedSerialPort(cboxRadioPort.Text, int.Parse(cboxBaud.Text));
             mf.spRadio.NewLine = "\r\n";
 
             btnOpenSerial.Enabled = false;

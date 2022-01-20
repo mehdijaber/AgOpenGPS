@@ -72,6 +72,7 @@
     <Compile Include="Classes\ListViewColumnSorterExt.cs" />
     <Compile Include="Classes\CRadioChannel.cs" />
     <Compile Include="Classes\CSettings.cs" />
+    <Compile Include="Classes\CEnhancedSerialPort.cs" />
     <Compile Include="Forms\FormCommPicker.cs">
       <SubType>Form</SubType>
     </Compile>
