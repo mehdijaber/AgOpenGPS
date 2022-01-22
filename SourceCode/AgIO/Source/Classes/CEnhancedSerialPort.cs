@@ -70,7 +70,9 @@ namespace AgIO
 				fieldInfo = typeof(SerialPort).GetField("data_received", BindingFlags.Instance | BindingFlags.NonPublic);
 				data_received = fieldInfo.GetValue(this);
 
-				new System.Threading.Thread(new System.Threading.ThreadStart(this.EventThreadFunction)).Start();
+				System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(this.EventThreadFunction));
+				thread.IsBackground = true;
+				thread.Start();
 			}
 		}
 
