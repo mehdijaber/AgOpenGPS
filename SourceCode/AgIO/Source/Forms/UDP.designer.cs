@@ -121,7 +121,7 @@ namespace AgIO
                 recvFromAOGLoopBackSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
                 // AgIO listens on this port
-                recvFromAOGLoopBackSocket.Bind(new IPEndPoint(IPAddress.Any, 17777));
+                recvFromAOGLoopBackSocket.Bind(new IPEndPoint(IPAddress.Parse("127.255.255.255"), 17777));
 
                 // Initialise the IPEndPoint for the client
                 EndPoint client = new IPEndPoint(IPAddress.Any, 0);
