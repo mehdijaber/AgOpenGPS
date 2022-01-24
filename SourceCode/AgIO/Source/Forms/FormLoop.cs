@@ -402,8 +402,8 @@ namespace AgIO
                 try
                 {
                     recvFromAOGLoopBackSocket.Shutdown(SocketShutdown.Both);
-                }
-                finally { recvFromAOGLoopBackSocket.Close(); }
+                } catch (SocketException) {
+                } finally { recvFromAOGLoopBackSocket.Close(); recvFromAOGLoopBackSocket = null; }
             }
 
             if (sendToAOGLoopBackSocket != null)
@@ -411,8 +411,8 @@ namespace AgIO
                 try
                 {
                     sendToAOGLoopBackSocket.Shutdown(SocketShutdown.Both);
-                }
-                finally { sendToAOGLoopBackSocket.Close(); }
+                } catch (SocketException) {
+                } finally { sendToAOGLoopBackSocket.Close(); sendToAOGLoopBackSocket = null; }
             }
 
             if (sendToUDPSocket != null)
@@ -420,8 +420,8 @@ namespace AgIO
                 try
                 {
                     sendToUDPSocket.Shutdown(SocketShutdown.Both);
-                }
-                finally { sendToUDPSocket.Close(); }
+                } catch (SocketException) {
+                } finally { sendToUDPSocket.Close(); sendToUDPSocket = null; }
             }
 
             if (recvFromUDPSocket != null)
@@ -429,8 +429,8 @@ namespace AgIO
                 try
                 {
                     recvFromUDPSocket.Shutdown(SocketShutdown.Both);
-                }
-                finally { recvFromUDPSocket.Close(); }
+                } catch (SocketException) {
+                } finally { recvFromUDPSocket.Close(); recvFromUDPSocket = null; }
             }
         }
 

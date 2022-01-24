@@ -484,6 +484,7 @@ namespace AgIO
             // listBox1
             // 
             this.listBox1.BackColor = System.Drawing.Color.Snow;
+            this.listBox1.ForeColor = System.Drawing.Color.Black;
             this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBox1.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;

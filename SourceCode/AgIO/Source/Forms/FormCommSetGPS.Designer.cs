@@ -131,7 +131,7 @@
             this.cboxLastSentence.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxLastSentence.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLastSentence.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxLastSentence.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxLastSentence.ForeColor = System.Drawing.Color.Black;
             this.cboxLastSentence.FormattingEnabled = true;
             this.cboxLastSentence.Items.AddRange(new object[] {
             "GGA",
@@ -163,7 +163,7 @@
             this.cboxPort.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPort.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxPort.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxPort.ForeColor = System.Drawing.Color.Black;
             this.cboxPort.FormattingEnabled = true;
             this.cboxPort.Location = new System.Drawing.Point(10, 37);
             this.cboxPort.Name = "cboxPort";
@@ -176,7 +176,7 @@
             this.cboxBaud.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxBaud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxBaud.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxBaud.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxBaud.ForeColor = System.Drawing.Color.Black;
             this.cboxBaud.FormattingEnabled = true;
             this.cboxBaud.Items.AddRange(new object[] {
             "4800",
@@ -274,7 +274,7 @@
             this.cboxPort2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxPort2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPort2.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxPort2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxPort2.ForeColor = System.Drawing.Color.Black;
             this.cboxPort2.FormattingEnabled = true;
             this.cboxPort2.Location = new System.Drawing.Point(10, 37);
             this.cboxPort2.Name = "cboxPort2";
@@ -287,7 +287,7 @@
             this.cboxBaud2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxBaud2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxBaud2.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxBaud2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxBaud2.ForeColor = System.Drawing.Color.Black;
             this.cboxBaud2.FormattingEnabled = true;
             this.cboxBaud2.Items.AddRange(new object[] {
             "4800",
@@ -586,7 +586,7 @@
             this.cboxIMU.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cboxIMU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxIMU.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
-            this.cboxIMU.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cboxIMU.ForeColor = System.Drawing.Color.Black;
             this.cboxIMU.FormattingEnabled = true;
             this.cboxIMU.Location = new System.Drawing.Point(10, 58);
             this.cboxIMU.Name = "cboxIMU";
