@@ -49,62 +49,7 @@ namespace AgIO
             if (Settings.Default.setUDP_isOn) LoadUDPNetwork();
             LoadLoopback();
 
-            isSendNMEAToUDP = Properties.Settings.Default.setUDP_isSendNMEAToUDP;
-
-            lblGPS1Comm.Text = "---";
-            lblIMUComm.Text = "---";
-            lblMod1Comm.Text = "---";
-            lblMod2Comm.Text = "---";
-            //lblMod3Comm.Text = "---";
-
-            //set baud and port from last time run
-            baudRateGPS = Settings.Default.setPort_baudRateGPS;
-            portNameGPS = Settings.Default.setPort_portNameGPS;
-            wasGPSConnectedLastRun = Settings.Default.setPort_wasGPSConnected;
-            if (wasGPSConnectedLastRun)
-            {
-                OpenGPSPort();
-                if (spGPS.IsOpen) lblGPS1Comm.Text = portNameGPS;
-            }
-
-            //Open IMU
-            portNameIMU = Settings.Default.setPort_portNameIMU;
-            wasIMUConnectedLastRun = Settings.Default.setPort_wasIMUConnected;
-            if (wasIMUConnectedLastRun)
-            {
-                OpenIMUPort();
-                if (spIMU.IsOpen) lblIMUComm.Text = portNameIMU;
-            }
-
-
-            //same for Module1 port
-            portNameModule1 = Settings.Default.setPort_portNameModule1;
-            wasModule1ConnectedLastRun = Settings.Default.setPort_wasModule1Connected;
-            if (wasModule1ConnectedLastRun)
-            {
-                OpenModule1Port();
-                if (spModule1.IsOpen) lblMod1Comm.Text = portNameModule1;
-            }
-
-            //same for Module2 port
-            portNameModule2 = Settings.Default.setPort_portNameModule2;
-            wasModule2ConnectedLastRun = Settings.Default.setPort_wasModule2Connected;
-            if (wasModule2ConnectedLastRun)
-            {
-                OpenModule2Port();
-                if (spModule2.IsOpen) lblMod2Comm.Text = portNameModule2;
-            }
-
-            //same for Module3 port
-            portNameModule3 = Settings.Default.setPort_portNameModule3;
-            wasModule3ConnectedLastRun = Settings.Default.setPort_wasModule3Connected;
-            if (wasModule3ConnectedLastRun)
-            {
-                OpenModule3Port();
-                //if (spModule3.IsOpen) lblMod3Comm.Text = portNameModule3;
-            }
-
-            ConfigureNTRIP();
+            SetupSerialDevices();
 
             string[] ports = System.IO.Ports.SerialPort.GetPortNames();
             listBox1.Items.Clear();
@@ -207,7 +152,7 @@ namespace AgIO
 
                 if (wasGPSConnectedLastRun)
                 {
-                    if (!spGPS.IsOpen)
+                    if (!scController.GPS.IsOpen)
                     {
                         wasGPSConnectedLastRun = false;
                         lblGPS1Comm.Text = "---";
