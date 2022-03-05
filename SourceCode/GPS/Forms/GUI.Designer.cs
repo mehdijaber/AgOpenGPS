@@ -114,7 +114,7 @@ namespace AgOpenGPS
                 displayUpdateThreeSecondCounter = threeSeconds;
 
                 //check to make sure the grid is big enough
-                worldGrid.checkZoomWorldGrid(pn.fix.northing, pn.fix.easting);
+                //worldGrid.checkZoomWorldGrid(pn.fix.northing, pn.fix.easting);
 
                 if (panelNavigation.Visible)
                     lblHz.Text = fixUpdateHz + " ~ " + (frameTime.ToString("N1")) + " " + FixQuality;
@@ -240,6 +240,8 @@ namespace AgOpenGPS
                     else if (ct.isContourBtnOn) lblInty.Text = ct.inty.ToString("N3");
                 }
 
+                if (recPath.isDrivingRecordedPath) lblInty.Text = recPath.inty.ToString("N3");
+
                 if (ABLine.isBtnABLineOn && !ct.isContourBtnOn)
                 {
                     btnEditAB.Text = ((int)(ABLine.moveDistance * 100)).ToString();
@@ -287,18 +289,27 @@ namespace AgOpenGPS
                 isFlashOnOff = !isFlashOnOff;
 
                 //AutoSteerAuto button enable - Ray Bear inspired code - Thx Ray!
-                if (isJobStarted && ahrs.isAutoSteerAuto &&
-                    (ABLine.isBtnABLineOn || ct.isContourBtnOn || curve.isBtnCurveOn))
-                {
-                    if (mc.steerSwitchValue == 0)
-                    {
-                        if (!isAutoSteerBtnOn) btnAutoSteer.PerformClick();
-                    }
-                    else
-                    {
-                        if (isAutoSteerBtnOn) btnAutoSteer.PerformClick();
-                    }
-                }
+                //if (isJobStarted && ahrs.isAutoSteerAuto &&
+                //    (ABLine.isBtnABLineOn || ct.isContourBtnOn || curve.isBtnCurveOn))
+                //{
+                //    if (mc.steerSwitchValue == 0)
+                //    {
+                //        if (!isAutoSteerBtnOn) btnAutoSteer.PerformClick();
+                //    }
+                //    else
+                //    {
+                //        if (isAutoSteerBtnOn) btnAutoSteer.PerformClick();
+                //    }
+                //}
+                //// Extension added 29.12.2021 (Othmar Ehrhardt):
+                //// If no AB line or path is activated, the work switch has no function and can be used to
+                //// control the play button of the Record path feature:
+                //else if(panelDrag.Visible && ahrs.isAutoSteerAuto)
+                //{
+                //    // No AB line activated, the autosteer button can be used to control the play button:
+                //    if (isAutoSteerBtnOn && !recPath.isDrivingRecordedPath) btnPathGoStop.PerformClick();
+                //    else if(recPath.isDrivingRecordedPath) btnPathGoStop.PerformClick();
+                //}
 
                 //Make sure it is off when it should
                 if ((!ABLine.isBtnABLineOn && !ct.isContourBtnOn && !curve.isBtnCurveOn && isAutoSteerBtnOn)
@@ -399,7 +410,6 @@ namespace AgOpenGPS
                 inOrCm2Cm = 2.54;
                 cm2CmOrIn = 0.3937;
 
-
                 unitsInCm = " in";
                 unitsFtM = " ft";
             }
@@ -407,6 +417,7 @@ namespace AgOpenGPS
             //timeToShowMenus = Properties.Settings.Default.setDisplay_showMenusTime;
 
             udpWatchLimit = Properties.Settings.Default.SetGPS_udpWatchMsec;
+            pn.headingTrueDualOffset = Properties.Settings.Default.setGPS_dualHeadingOffset;
 
             startSpeed = Vehicle.Default.setVehicle_startSpeed;
 

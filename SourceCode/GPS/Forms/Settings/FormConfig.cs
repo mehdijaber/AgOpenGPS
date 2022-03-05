@@ -83,14 +83,20 @@ namespace AgOpenGPS
 
             nudAgeAlarm.Controls[0].Enabled = false;
 
-            nudMaxCounts.Controls[0].Enabled = false;
             nudRaiseTime.Controls[0].Enabled = false;
             nudLowerTime.Controls[0].Enabled = false;
+
+            nudUser1.Controls[0].Enabled = false;
+            nudUser2.Controls[0].Enabled = false;
+            nudUser3.Controls[0].Enabled = false;
+            nudUser4.Controls[0].Enabled = false;
 
             nudTramWidth.Controls[0].Enabled = false;
             nudMenusOnTime.Controls[0].Enabled = false;
 
             nudGuidanceLookAhead.Controls[0].Enabled = false;
+
+            nudDualHeadingOffset.Controls[0].Enabled = false;            
         }
 
         private void FormConfig_Load(object sender, EventArgs e)
@@ -157,7 +163,7 @@ namespace AgOpenGPS
             tab1.SelectedTab = tabSummary;
             tboxVehicleNameSave.Focus();
 
-            mf.CloseTopMosts();
+            //mf.CloseTopMosts();
 
         }
 
@@ -311,7 +317,6 @@ namespace AgOpenGPS
         {
             SaveDisplaySettings();
         }
-
     }
 }
 
