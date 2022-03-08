@@ -285,13 +285,13 @@ namespace AgOpenGPS
                 sendToAppSocket.Bind(new IPEndPoint(IPAddress.Loopback, 15550));
 
                 // AOG sends to AgIO using this endpoint
-                epAgIO = new IPEndPoint(IPAddress.Parse("127.255.255.255"), 17777);
+                epAgIO = new IPEndPoint(IPAddress.Loopback, 17777);
 
                 // Initialise the client socket
                 recvFromAppSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
                 // IPEndPoint for AOG  to listen on 
-                recvFromAppSocket.Bind(new IPEndPoint(IPAddress.Parse("127.255.255.255"), 15555));
+                recvFromAppSocket.Bind(new IPEndPoint(IPAddress.Loopback, 15555));
 
                 // Initialise the IPEndPoint for the client
                 EndPoint clientEp = new IPEndPoint(IPAddress.Any, 0);
