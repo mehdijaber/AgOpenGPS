@@ -105,7 +105,7 @@ namespace AgIO
                 sendToAOGLoopBackSocket.Bind(new IPEndPoint(IPAddress.Loopback, 17770));
 
                 //AgIO sends to AgOpen on this endpoint
-                epAgOpen = new IPEndPoint(IPAddress.Parse("127.255.255.255"), 15555);
+                epAgOpen = new IPEndPoint(IPAddress.Loopback, 15555);
                
                 // Initialise the AgVR send socket
                 sendToAgVRLoopBackSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -121,7 +121,7 @@ namespace AgIO
                 recvFromAOGLoopBackSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
                 // AgIO listens on this port
-                recvFromAOGLoopBackSocket.Bind(new IPEndPoint(IPAddress.Parse("127.255.255.255"), 17777));
+                recvFromAOGLoopBackSocket.Bind(new IPEndPoint(IPAddress.Loopback, 17777));
 
                 // Initialise the IPEndPoint for the client
                 EndPoint client = new IPEndPoint(IPAddress.Any, 0);
