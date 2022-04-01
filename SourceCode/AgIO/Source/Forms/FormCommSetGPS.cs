@@ -81,8 +81,8 @@ namespace AgIO
                 cboxRtcmPort.Enabled = false;
                 btnCloseRTCM.Enabled = true;
                 btnOpenRTCM.Enabled = false;
-                labelRtcmBaud.Text = mf.spGPS.BaudRate.ToString();
-                labelRtcmPort.Text = mf.spGPS.PortName;
+                labelRtcmBaud.Text = GPS.BaudRate.ToString();
+                labelRtcmPort.Text = GPS.PortName;
 
             }
             else

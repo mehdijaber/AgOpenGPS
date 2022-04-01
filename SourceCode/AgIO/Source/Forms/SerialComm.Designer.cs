@@ -1016,7 +1016,7 @@ namespace AgIO
             try {
                 if (spRtcm.IsOpen)
                 {
-                    spRtcm.Write(data, 0, data.Length);
+                    spRtcm.Write(data);
                     traffic.cntrGPSOut += data.Length;
                 }
                 else
