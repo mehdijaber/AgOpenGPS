@@ -1,5 +1,6 @@
 ﻿//Please, if you use this, share the improvements
 
+using AgIO.Properties;
 using System.IO.Ports;
 using System;
 using System.Windows.Forms;
@@ -10,11 +11,10 @@ namespace AgIO
 {
     public partial class FormLoop
     {
+        private static SerialComm.Controller scController = SerialComm.Controller.Instance;
+
         //B5,62,7F,PGN_ID,Length
         private int totalHeaderByteCount = 5;
-
-        public static string portNameGPS = "***";
-        public  static int baudRateGPS = 4800;
 
         public  static string portNameGPS2 = "***";
         public  static int baudRateGPS2 = 4800;
@@ -55,9 +55,6 @@ namespace AgIO
         public bool wasIMUConnectedLastRun = false;
         public bool wasRtcmConnectedLastRun = false;
 
-        //serial port gps is connected to
-        public EnhancedSerialPort spGPS = new EnhancedSerialPort(portNameGPS, baudRateGPS, Parity.None, 8, StopBits.One);
-
         //serial port gps2 is connected to
         public EnhancedSerialPort spGPS2 = new EnhancedSerialPort(portNameGPS2, baudRateGPS2, Parity.None, 8, StopBits.One);
 
@@ -81,6 +78,76 @@ namespace AgIO
         private byte[] pgnModule2 = new byte[262];
         private byte[] pgnModule3 = new byte[262];
         private byte[] pgnIMU = new byte[262];
+
+        private void SetupSerialDevices()
+        {
+            isSendNMEAToUDP = Properties.Settings.Default.setUDP_isSendNMEAToUDP;
+
+            lblGPS1Comm.Text = "---";
+            lblIMUComm.Text = "---";
+            lblMod1Comm.Text = "---";
+            lblMod2Comm.Text = "---";
+            //lblMod3Comm.Text = "---";
+
+            scController.GPS.Connected += GPSConnected;
+            scController.GPS.Disconnected += GPSDisconnected;
+            scController.GPS.DataReceived += GPSTrafficMonitorIn;
+            scController.GPS.DataReceived += sp_DataReceivedGPS;
+            scController.GPS.DataSent += GPSTrafficMonitorOut;
+
+            wasGPSConnectedLastRun = Settings.Default.setPort_wasGPSConnected;
+            if (wasGPSConnectedLastRun)
+                scController.Connect(scController.GPS);
+
+            // set baud and port for rtcm from last time run
+            baudRateRtcm = Settings.Default.setPort_baudRateRtcm;
+            portNameRtcm = Settings.Default.setPort_portNameRtcm;
+            wasRtcmConnectedLastRun = Settings.Default.setPort_wasRtcmConnected;
+            
+            if (wasRtcmConnectedLastRun)
+            {
+                OpenRtcmPort();
+            }
+
+            //Open IMU
+            portNameIMU = Settings.Default.setPort_portNameIMU;
+            wasIMUConnectedLastRun = Settings.Default.setPort_wasIMUConnected;
+            if (wasIMUConnectedLastRun)
+            {
+                OpenIMUPort();
+                if (spIMU.IsOpen) lblIMUComm.Text = portNameIMU;
+            }
+
+
+            //same for Module1 port
+            portNameModule1 = Settings.Default.setPort_portNameModule1;
+            wasModule1ConnectedLastRun = Settings.Default.setPort_wasModule1Connected;
+            if (wasModule1ConnectedLastRun)
+            {
+                OpenModule1Port();
+                if (spModule1.IsOpen) lblMod1Comm.Text = portNameModule1;
+            }
+
+            //same for Module2 port
+            portNameModule2 = Settings.Default.setPort_portNameModule2;
+            wasModule2ConnectedLastRun = Settings.Default.setPort_wasModule2Connected;
+            if (wasModule2ConnectedLastRun)
+            {
+                OpenModule2Port();
+                if (spModule2.IsOpen) lblMod2Comm.Text = portNameModule2;
+            }
+
+            //same for Module3 port
+            portNameModule3 = Settings.Default.setPort_portNameModule3;
+            wasModule3ConnectedLastRun = Settings.Default.setPort_wasModule3Connected;
+            if (wasModule3ConnectedLastRun)
+            {
+                OpenModule3Port();
+                //if (spModule3.IsOpen) lblMod3Comm.Text = portNameModule3;
+            }
+
+            ConfigureNTRIP();
+        }
 
         #region IMUSerialPort //--------------------------------------------------------------------
         private void ReceiveIMUPort(byte[] Data)
@@ -942,113 +1009,94 @@ namespace AgIO
 
         #region GPS SerialPort --------------------------------------------------------------------------
 
-        public void SendGPSPort(byte[] data)
+        public void SendGPSPort(byte[] _data)
         {
-            try
-            {
+            string data = BitConverter.ToString(_data);
+
+            try {
                 if (spRtcm.IsOpen)
                 {
                     spRtcm.Write(data, 0, data.Length);
                     traffic.cntrGPSOut += data.Length;
                 }
-
-                else if (spGPS.IsOpen)
-                {
-                    spGPS.Write(data, 0, data.Length);
-                    traffic.cntrGPSOut += data.Length;
-                }
-            }
-            catch (Exception)
-            {
+                else
+                    scController.SendData(scController.GPS, data);
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
 
         }
 
         public void OpenGPSPort()
         {
-
-            if (spGPS.IsOpen)
-            {
-                //close it first
-                CloseGPSPort();
+            try {
+                scController.Connect(scController.GPS);
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
+        }
 
-
-            if (!spGPS.IsOpen)
-            {
-                spGPS.PortName = portNameGPS;
-                spGPS.BaudRate = baudRateGPS;
-                spGPS.DataReceived += sp_DataReceivedGPS;
-                spGPS.WriteTimeout = 1000;
-            }
-
+<<<<<<< HEAD
             try { spGPS.Open(); }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-            }
-
-            if (spGPS.IsOpen)
-            {
-                //discard any stuff in the buffers
-                spGPS.DiscardOutBuffer();
-                spGPS.DiscardInBuffer();
-
-                Properties.Settings.Default.setPort_portNameGPS = portNameGPS;
-                Properties.Settings.Default.setPort_baudRateGPS = baudRateGPS;
-                Properties.Settings.Default.setPort_wasGPSConnected = true;
-                Properties.Settings.Default.Save();
-                lblGPS1Comm.Text = portNameGPS;
-                wasGPSConnectedLastRun = true;
-            }
-        }
+=======
         public void CloseGPSPort()
         {
-            //if (sp.IsOpen)
-            {
-                //spGPS.DataReceived -= sp_DataReceivedGPS;
-                try { spGPS.Close(); }
-                catch (Exception e)
-                {
-                    //WriteErrorLog("Closing GPS Port" + e.ToString());
-                    MessageBox.Show(e.Message, "Connection already terminated?");
-                }
-
-                //update port status labels
-                //stripPortGPS.Text = " * * " + baudRateGPS.ToString();
-                //stripPortGPS.ForeColor = Color.ForestGreen;
-                //stripOnlineGPS.Value = 1;
-                spGPS.Dispose();
+            try {
+                scController.CloseConnection(scController.GPS);
+            } catch (Exception e) {
+                //MessageBox.Show(e.Message, "Connection already terminated?");
+>>>>>>> serialrework
+                Console.WriteLine(e);
             }
-            lblGPS1Comm.Text = "---";
-            wasGPSConnectedLastRun = false;
-
         }
 
-        //called by the GPS delegate every time a chunk is rec'd
+        private void GPSConnected(object sender, EventArgs args)
+        {
+            SerialComm GPS = sender as SerialComm;
+
+            Properties.Settings.Default.setPort_portNameGPS = GPS.PortName;
+            Properties.Settings.Default.setPort_baudRateGPS = GPS.BaudRate;
+            Properties.Settings.Default.setPort_wasGPSConnected = true;
+            Properties.Settings.Default.Save();
+            lblGPS1Comm.Text = scController.GPS.PortName;
+        }
+
+        private void GPSDisconnected(object sender, EventArgs args)
+        {
+            Properties.Settings.Default.setPort_wasGPSConnected = false;
+            Properties.Settings.Default.Save();
+            lblGPS1Comm.Text = "---";
+            wasGPSConnectedLastRun = false;
+        }
+
+        private void GPSTrafficMonitorIn(object sender, SerialComm.DataReceivedEventArgs args)
+        {
+            string data = args.Data;
+            traffic.cntrGPSIn += data.Length;
+        }
+
+        private void GPSTrafficMonitorOut(object sender, SerialComm.DataSentEventArgs args)
+        {
+            string data = args.Data;
+            traffic.cntrGPSOut += data.Length;
+        }
+
         private void ReceiveGPSPort(string sentence)
         {
             rawBuffer += sentence;
             ParseNMEA(ref rawBuffer);
 
-            //SendToLoopBackMessageAOG(sentence);
-            traffic.cntrGPSIn += sentence.Length;
             if (isGPSCommOpen) recvGPSSentence = sentence;
         }
 
-        //serial port receive in its own thread
-        private void sp_DataReceivedGPS(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private void sp_DataReceivedGPS(object sender, SerialComm.DataReceivedEventArgs args)
         {
-            if (spGPS.IsOpen)
-            {
-                try
-                {
-                    string sentence = spGPS.ReadExisting();
-                    BeginInvoke((MethodInvoker)(() => ReceiveGPSPort(sentence)));
-                }
-                catch (Exception)
-                {
-                }
+            try {
+                string sentence = args.Data;
+                BeginInvoke((MethodInvoker)(() => ReceiveGPSPort(sentence)));
+            } catch (Exception) {
             }
         }
         #endregion SerialPortGPS

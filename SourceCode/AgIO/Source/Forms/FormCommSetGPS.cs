@@ -5,6 +5,9 @@ namespace AgIO
 {
     public partial class FormCommSetGPS : Form
     {
+        private static SerialComm.Controller scController = SerialComm.Controller.Instance;
+        private static SerialComm GPS = scController.GPS;
+
         //class variables
         private readonly FormLoop mf = null;
 
@@ -41,7 +44,7 @@ namespace AgIO
         private void FormCommSet_Load(object sender, EventArgs e)
         {
             //check if GPS port is open or closed and set buttons accordingly
-            if (mf.spGPS.IsOpen)
+            if (GPS.IsOpen)
             {
                 cboxBaud.Enabled = false;
                 cboxPort.Enabled = false;
@@ -105,8 +108,8 @@ namespace AgIO
                 cboxRtcmPort.Items.Add(s);
             }
 
-            lblCurrentBaud.Text = mf.spGPS.BaudRate.ToString();
-            lblCurrentPort.Text = mf.spGPS.PortName;
+            lblCurrentBaud.Text = GPS.BaudRate.ToString();
+            lblCurrentPort.Text = GPS.PortName;
 
             lblCurrentBaud2.Text = mf.spGPS2.BaudRate.ToString();
             lblCurrentPort2.Text = mf.spGPS2.PortName;
@@ -200,8 +203,7 @@ namespace AgIO
         // GPS Serial Port
         private void cboxBaud_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            mf.spGPS.BaudRate = Convert.ToInt32(cboxBaud.Text);
-            FormLoop.baudRateGPS = Convert.ToInt32(cboxBaud.Text);
+            scController.SetBaudRate(GPS, Convert.ToInt32(cboxBaud.Text));
         }
         private void cboxBaud2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -212,8 +214,7 @@ namespace AgIO
 
         private void cboxPort_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            mf.spGPS.PortName = cboxPort.Text;
-            FormLoop.portNameGPS = cboxPort.Text;
+            scController.SetPortName(GPS, cboxPort.Text);
         }
 
         private void cboxPort2_SelectedIndexChanged(object sender, EventArgs e)
@@ -227,14 +228,14 @@ namespace AgIO
         {
 
             mf.OpenGPSPort();
-            if (mf.spGPS.IsOpen)
+            if (GPS.IsOpen)
             {
                 cboxBaud.Enabled = false;
                 cboxPort.Enabled = false;
                 btnCloseSerial.Enabled = true;
                 btnOpenSerial.Enabled = false;
-                lblCurrentBaud.Text = mf.spGPS.BaudRate.ToString();
-                lblCurrentPort.Text = mf.spGPS.PortName;
+                lblCurrentBaud.Text = GPS.BaudRate.ToString();
+                lblCurrentPort.Text = GPS.PortName;
             }
             else
             {
@@ -249,7 +250,7 @@ namespace AgIO
         private void btnCloseSerial_Click(object sender, EventArgs e)
         {
             mf.CloseGPSPort();
-            if (mf.spGPS.IsOpen)
+            if (GPS.IsOpen)
             {
                 cboxBaud.Enabled = false;
                 cboxPort.Enabled = false;
@@ -315,8 +316,8 @@ namespace AgIO
                 cboxPort2.Enabled = false;
                 btnCloseSerial2.Enabled = true;
                 btnOpenSerial2.Enabled = false;
-                lblCurrentBaud2.Text = mf.spGPS.BaudRate.ToString();
-                lblCurrentPort2.Text = mf.spGPS.PortName;
+                lblCurrentBaud2.Text = GPS.BaudRate.ToString();
+                lblCurrentPort2.Text = GPS.PortName;
             }
             else
             {
@@ -356,7 +357,7 @@ namespace AgIO
             textBoxRcv.Text = mf.recvGPSSentence;
             textBoxRcv2.Text = mf.recvGPS2Sentence;
             lblSteer.Text = mf.spModule1.PortName;
-            lblGPS.Text = mf.spGPS.PortName;
+            lblGPS.Text = GPS.PortName;
             lblIMU.Text = mf.spIMU.PortName;
             lblMachine.Text = mf.spModule2.PortName;
 
@@ -402,8 +403,8 @@ namespace AgIO
         private void btnClrGPS_Click(object sender, EventArgs e)
         {
             mf.CloseGPSPort();
-            FormLoop.portNameGPS = "GPS 1";
-            Properties.Settings.Default.setPort_portNameGPS = FormLoop.portNameGPS;
+            scController.SetPortName(GPS, "GPS 1");
+            Properties.Settings.Default.setPort_portNameGPS = GPS.PortName;
             Properties.Settings.Default.Save();
 
         }
