@@ -1016,7 +1016,7 @@ namespace AgIO
             try {
                 if (spRtcm.IsOpen)
                 {
-                    spRtcm.Write(data, 0, data.Length);
+                    spRtcm.Write(data);
                     traffic.cntrGPSOut += data.Length;
                 }
                 else
@@ -1036,18 +1036,12 @@ namespace AgIO
             }
         }
 
-<<<<<<< HEAD
-            try { spGPS.Open(); }
-            catch (Exception e)
-            {
-=======
         public void CloseGPSPort()
         {
             try {
                 scController.CloseConnection(scController.GPS);
             } catch (Exception e) {
                 //MessageBox.Show(e.Message, "Connection already terminated?");
->>>>>>> serialrework
                 Console.WriteLine(e);
             }
         }
