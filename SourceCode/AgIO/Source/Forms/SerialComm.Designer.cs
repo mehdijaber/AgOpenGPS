@@ -16,20 +16,23 @@ namespace AgIO
         //B5,62,7F,PGN_ID,Length
         private int totalHeaderByteCount = 5;
 
-        public static string portNameGPS2 = "***";
-        public static int baudRateGPS2 = 4800;
+        public  static string portNameGPS2 = "***";
+        public  static int baudRateGPS2 = 4800;
 
-        public static string portNameIMU = "***";
-        public static int baudRateIMU = 38400;
+        public  static string portNameRtcm = "***";
+        public  static int baudRateRtcm = 4800;
 
-        public static string portNameModule1 = "***";
-        public static int baudRateModule1 = 38400;
+        public  static string portNameIMU = "***";
+        public  static int baudRateIMU = 38400;
 
-        public static string portNameModule2 = "***";
-        public static int baudRateModule2 = 38400;
+        public  static string portNameModule1 = "***";
+        public  static int baudRateModule1 = 38400;
 
-        public static string portNameModule3 = "***";
-        public static int baudRateModule3 = 38400;
+        public  static string portNameModule2 = "***";
+        public  static int baudRateModule2 = 38400;
+
+        public  static string portNameModule3 = "***";
+        public  static int baudRateModule3 = 38400;
 
         //used to decide to autoconnect section arduino this run
         public string recvGPSSentence = "GPS";
@@ -50,9 +53,13 @@ namespace AgIO
         public bool wasModule2ConnectedLastRun = false;
         public bool wasModule1ConnectedLastRun = false;
         public bool wasIMUConnectedLastRun = false;
+        public bool wasRtcmConnectedLastRun = false;
 
         //serial port gps2 is connected to
         public SerialPort spGPS2 = new SerialPort(portNameGPS2, baudRateGPS2, Parity.None, 8, StopBits.One);
+
+        //serial port gps is connected to
+        public SerialPort spRtcm = new SerialPort(portNameRtcm, baudRateRtcm, Parity.None, 8, StopBits.One);
 
         //serial port Arduino is connected to
         public SerialPort spIMU = new SerialPort(portNameIMU, baudRateIMU, Parity.None, 8, StopBits.One);
@@ -91,6 +98,16 @@ namespace AgIO
             wasGPSConnectedLastRun = Settings.Default.setPort_wasGPSConnected;
             if (wasGPSConnectedLastRun)
                 scController.Connect(scController.GPS);
+
+            // set baud and port for rtcm from last time run
+            baudRateRtcm = Settings.Default.setPort_baudRateRtcm;
+            portNameRtcm = Settings.Default.setPort_portNameRtcm;
+            wasRtcmConnectedLastRun = Settings.Default.setPort_wasRtcmConnected;
+            
+            if (wasRtcmConnectedLastRun)
+            {
+                OpenRtcmPort();
+            }
 
             //Open IMU
             portNameIMU = Settings.Default.setPort_portNameIMU;
@@ -997,7 +1014,13 @@ namespace AgIO
             string data = BitConverter.ToString(_data);
 
             try {
-                scController.SendData(scController.GPS, data);
+                if (spRtcm.IsOpen)
+                {
+                    spRtcm.Write(data, 0, data.Length);
+                    traffic.cntrGPSOut += data.Length;
+                }
+                else
+                    scController.SendData(scController.GPS, data);
             } catch (Exception e) {
                 Console.WriteLine(e);
             }
@@ -1174,5 +1197,53 @@ namespace AgIO
         }
         #endregion //--------------------------------------------------------
 
+        public void OpenRtcmPort()
+        {
+            if (spRtcm.IsOpen)
+            {
+                //close it first
+                CloseRtcmPort();
+            }
+
+            if (!spRtcm.IsOpen)
+            {
+                spRtcm.PortName = portNameRtcm;
+                spRtcm.BaudRate = baudRateRtcm;
+                spRtcm.WriteTimeout = 1000;
+            }
+
+            try { spRtcm.Open(); }
+            catch (Exception)
+            {
+            }
+
+            if (spRtcm.IsOpen)
+            {
+                //discard any stuff in the buffers
+                spRtcm.DiscardOutBuffer();
+                spRtcm.DiscardInBuffer();
+
+                Properties.Settings.Default.setPort_portNameRtcm = portNameRtcm;
+                Properties.Settings.Default.setPort_baudRateRtcm = baudRateRtcm;
+                Properties.Settings.Default.setPort_wasRtcmConnected = true;
+                Properties.Settings.Default.Save();
+                //lblRtcmComm.Text = portNameRtcm;
+                wasRtcmConnectedLastRun = true;
+            }
+        }
+
+        public void CloseRtcmPort()
+        {
+            {
+                try { spRtcm.Close(); }
+                catch (Exception e)
+                {
+                    //WriteErrorLog("Closing GPS Port" + e.ToString());
+                    MessageBox.Show(e.Message, "Connection already terminated?");
+                }
+            }
+
+            wasRtcmConnectedLastRun = false;
+        }
     }//end class
 }//end namespace

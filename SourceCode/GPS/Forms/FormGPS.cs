@@ -126,7 +126,7 @@ namespace AgOpenGPS
         public bool isInAutoDrive = true;
 
         //isGPSData form up
-        public bool isGPSSentencesOn = false;
+        public bool isGPSSentencesOn = false, isKeepOffsetsOn = false;
 
         /// <summary>
         /// create the scene camera
@@ -219,11 +219,6 @@ namespace AgOpenGPS
         /// </summary>
         public CFieldData fd;
 
-        /// <summary>
-        /// Class containing workswitch functionality
-        /// </summary>
-        public CWorkSwitch workSwitch;
-
         ///// <summary>
         ///// Sound
         ///// </summary>
@@ -262,7 +257,7 @@ namespace AgOpenGPS
 
             //ControlExtension.Draggable(panelSnap, true);
             ControlExtension.Draggable(oglZoom, true);
-            //ControlExtension.Draggable(panelSim, true);
+            ControlExtension.Draggable(panelDrag, true);
 
             setWorkingDirectoryToolStripMenuItem.Text = gStr.gsDirectories;
             enterSimCoordsToolStripMenuItem.Text = gStr.gsEnterSimCoords;
@@ -330,7 +325,7 @@ namespace AgOpenGPS
             yt = new CYouTurn(this);
 
             //module communication
-            mc = new CModuleComm();
+            mc = new CModuleComm(this);
 
             //boundary object
             bnd = new CBoundary(this);
@@ -355,9 +350,6 @@ namespace AgOpenGPS
 
             //resource for gloabal language strings
             _rm = new ResourceManager("AgOpenGPS.gStr", Assembly.GetExecutingAssembly());
-
-            // Access to workswitch functionality
-            workSwitch = new CWorkSwitch(this);
 
             //access to font class
             font = new CFont(this);
@@ -487,13 +479,12 @@ namespace AgOpenGPS
 
 
         // Generates a random number within a range.       
-        public double RandomNumber(double min, double max)
-        {
-            return min + _random.NextDouble() * (max - min);
-        }
+        //public double RandomNumber(double min, double max)
+        //{
+        //    return min + _random.NextDouble() * (max - min);
+        //}
 
-        private readonly Random _random = new Random();
-
+        //private readonly Random _random = new Random();
 
         private void btnVideoHelpRecPath_Click(object sender, EventArgs e)
         {
@@ -546,8 +537,6 @@ namespace AgOpenGPS
                         FileSaveEverythingBeforeClosingField();
 
                         displayFieldName = gStr.gsNone;
-                        //shutdown and reset all module data
-                        mc.ResetAllModuleCommValues();
                     }
                 }
             }
@@ -595,7 +584,7 @@ namespace AgOpenGPS
             Lift, SkyNight, SteerPointer,
             SteerDot, Tractor, QuestionMark,
             FrontWheels, FourWDFront, FourWDRear,
-            Harvester, Lateral
+            Harvester, Lateral, bingGrid
         }
 
         public void CheckSettingsNotNull()
@@ -618,7 +607,7 @@ namespace AgOpenGPS
                 Properties.Resources.z_Lift,Properties.Resources.z_SkyNight,Properties.Resources.z_SteerPointer,
                 Properties.Resources.z_SteerDot,GetTractorBrand(Settings.Default.setBrand_TBrand),Properties.Resources.z_QuestionMark,
                 Properties.Resources.z_FrontWheels,Get4WDBrandFront(Settings.Default.setBrand_WDBrand), Get4WDBrandRear(Settings.Default.setBrand_WDBrand),
-                GetHarvesterBrand(Settings.Default.setBrand_HBrand), Properties.Resources.z_LateralManual
+                GetHarvesterBrand(Settings.Default.setBrand_HBrand), Properties.Resources.z_LateralManual, Resources.z_bingMap
             };
 
             texture = new uint[oglTextures.Length];
@@ -1033,14 +1022,25 @@ namespace AgOpenGPS
         //close the current job
         public void JobClose()
         {
+            recPath.resumeState = 0;
+            btnResumePath.Image = Properties.Resources.pathResumeStart;
+            recPath.currentPositonIndex = 0;
+
             //reset field offsets
-            pn.fixOffset.easting = 0;
-            pn.fixOffset.northing = 0;
+            if (!isKeepOffsetsOn)
+            {
+                pn.fixOffset.easting = 0;
+                pn.fixOffset.northing = 0;
+            }
 
             //turn off headland
             bnd.isHeadlandOn = false;
             btnHeadlandOnOff.Image = Properties.Resources.HeadlandOff;
             btnHeadlandOnOff.Visible = false;
+
+            recPath.recList.Clear();
+            recPath.StopDrivingRecordedPath();
+            panelDrag.Visible = false;  
 
             //make sure hydraulic lift is off
             p_239.pgn[p_239.hydLift] = 0;
@@ -1183,9 +1183,6 @@ namespace AgOpenGPS
             //reset GUI areas
             fd.UpdateFieldBoundaryGUIAreas();
 
-            //reset all Port Module values
-            mc.ResetAllModuleCommValues();
-
             displayFieldName = gStr.gsNone;
             FixTramModeButton();
 
@@ -1195,6 +1192,7 @@ namespace AgOpenGPS
 
             FixPanelsAndMenus(false);
             SetZoom();
+            worldGrid.isGeoMap = false; 
         }
 
         //Does the logic to process section on off requests
@@ -1214,7 +1212,7 @@ namespace AgOpenGPS
 
                     if (section[j].sectionOffTimer > 0) section[j].sectionOffTimer--;
 
-                    if (section[j].sectionOffRequest & section[j].sectionOffTimer == 0)
+                    if (section[j].sectionOffRequest && section[j].sectionOffTimer == 0)
                     {
                         if (section[j].isSectionOn) section[j].isSectionOn = false;
                     }
@@ -1304,17 +1302,16 @@ namespace AgOpenGPS
         public void SetZoom()
         {
             //match grid to cam distance and redo perspective
-            if (camera.camSetDistance <= -20000) camera.gridZoom = 2000;
-            else if (camera.camSetDistance >= -20000 && camera.camSetDistance < -10000) camera.gridZoom = 2012 * 2;
-            else if (camera.camSetDistance >= -10000 && camera.camSetDistance < -5000) camera.gridZoom = 1006 * 2;
-            else if (camera.camSetDistance >= -5000 && camera.camSetDistance < -2000) camera.gridZoom = 503 * 2;
-            else if (camera.camSetDistance >= -2000 && camera.camSetDistance < -1000) camera.gridZoom = 201.2 * 2;
-            else if (camera.camSetDistance >= -1000 && camera.camSetDistance < -500) camera.gridZoom = 100.6 * 2;
-            else if (camera.camSetDistance >= -500 && camera.camSetDistance < -250) camera.gridZoom = 50.3 * 2;
-            else if (camera.camSetDistance >= -250 && camera.camSetDistance < -150) camera.gridZoom = 25.15 * 2;
-            else if (camera.camSetDistance >= -150 && camera.camSetDistance < -50) camera.gridZoom = 10.06 * 2;
-            else if (camera.camSetDistance >= -50 && camera.camSetDistance < -1) camera.gridZoom = 5.03 * 2;
-            //1.216 2.532
+            if (camera.camSetDistance > -50 ) camera.gridZoom = 10;
+            else if (camera.camSetDistance > -150 ) camera.gridZoom = 20;
+            else if (camera.camSetDistance > -250 ) camera.gridZoom = 40;
+            else if (camera.camSetDistance > -500 ) camera.gridZoom = 80;
+            else if (camera.camSetDistance > -1000) camera.gridZoom = 160;
+            else if (camera.camSetDistance > -2000) camera.gridZoom = 320;
+            else if (camera.camSetDistance > -5000) camera.gridZoom = 640;
+            else if (camera.camSetDistance > -10000) camera.gridZoom = 1280;
+            else if (camera.camSetDistance > -20000) camera.gridZoom = 2000;
+
             oglMain.MakeCurrent();
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();

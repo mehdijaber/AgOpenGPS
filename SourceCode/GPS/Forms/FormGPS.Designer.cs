@@ -75,8 +75,9 @@
             this.oglZoom = new OpenTK.GLControl();
             this.panelDrag = new System.Windows.Forms.TableLayoutPanel();
             this.btnPathGoStop = new System.Windows.Forms.Button();
-            this.btnPathDelete = new System.Windows.Forms.Button();
+            this.btnPickPath = new System.Windows.Forms.Button();
             this.btnPathRecordStop = new System.Windows.Forms.Button();
+            this.btnResumePath = new System.Windows.Forms.Button();
             this.btnResetSim = new System.Windows.Forms.Button();
             this.btnResetSteerAngle = new System.Windows.Forms.Button();
             this.timerSim = new System.Windows.Forms.Timer(this.components);
@@ -120,6 +121,7 @@
             this.webcamToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.offsetFixToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.angleChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.correctionToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripBtnField = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.boundariesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -581,16 +583,18 @@
             this.panelDrag.ColumnCount = 1;
             this.panelDrag.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelDrag.Controls.Add(this.btnPathGoStop, 0, 0);
-            this.panelDrag.Controls.Add(this.btnPathDelete, 0, 2);
-            this.panelDrag.Controls.Add(this.btnPathRecordStop, 0, 1);
-            this.panelDrag.Location = new System.Drawing.Point(381, 215);
+            this.panelDrag.Controls.Add(this.btnPickPath, 0, 3);
+            this.panelDrag.Controls.Add(this.btnPathRecordStop, 0, 2);
+            this.panelDrag.Controls.Add(this.btnResumePath, 0, 1);
+            this.panelDrag.Location = new System.Drawing.Point(323, 122);
             this.panelDrag.Name = "panelDrag";
-            this.panelDrag.RowCount = 3;
-            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.panelDrag.Size = new System.Drawing.Size(64, 218);
+            this.panelDrag.RowCount = 5;
+            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.panelDrag.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.panelDrag.Size = new System.Drawing.Size(64, 320);
             this.panelDrag.TabIndex = 445;
             this.panelDrag.Visible = false;
             // 
@@ -615,26 +619,26 @@
             this.btnPathGoStop.UseVisualStyleBackColor = false;
             this.btnPathGoStop.Click += new System.EventHandler(this.btnPathGoStop_Click);
             // 
-            // btnPathDelete
+            // btnPickPath
             // 
-            this.btnPathDelete.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPathDelete.BackColor = System.Drawing.Color.Transparent;
-            this.btnPathDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnPathDelete.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnPathDelete.FlatAppearance.BorderSize = 0;
-            this.btnPathDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPathDelete.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPathDelete.ForeColor = System.Drawing.Color.DarkGray;
-            this.btnPathDelete.Image = global::AgOpenGPS.Properties.Resources.Trash;
-            this.btnPathDelete.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnPathDelete.Location = new System.Drawing.Point(0, 157);
-            this.btnPathDelete.Margin = new System.Windows.Forms.Padding(0);
-            this.btnPathDelete.Name = "btnPathDelete";
-            this.btnPathDelete.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnPathDelete.Size = new System.Drawing.Size(64, 61);
-            this.btnPathDelete.TabIndex = 471;
-            this.btnPathDelete.UseVisualStyleBackColor = false;
-            this.btnPathDelete.Click += new System.EventHandler(this.btnPathDelete_Click);
+            this.btnPickPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnPickPath.BackColor = System.Drawing.Color.Transparent;
+            this.btnPickPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnPickPath.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnPickPath.FlatAppearance.BorderSize = 0;
+            this.btnPickPath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPickPath.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPickPath.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnPickPath.Image = global::AgOpenGPS.Properties.Resources.FileExplorerWindows;
+            this.btnPickPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnPickPath.Location = new System.Drawing.Point(0, 227);
+            this.btnPickPath.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPickPath.Name = "btnPickPath";
+            this.btnPickPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnPickPath.Size = new System.Drawing.Size(64, 61);
+            this.btnPickPath.TabIndex = 471;
+            this.btnPickPath.UseVisualStyleBackColor = false;
+            this.btnPickPath.Click += new System.EventHandler(this.btnPickPath_Click);
             // 
             // btnPathRecordStop
             // 
@@ -648,7 +652,7 @@
             this.btnPathRecordStop.ForeColor = System.Drawing.Color.DarkGray;
             this.btnPathRecordStop.Image = global::AgOpenGPS.Properties.Resources.BoundaryRecord;
             this.btnPathRecordStop.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnPathRecordStop.Location = new System.Drawing.Point(0, 77);
+            this.btnPathRecordStop.Location = new System.Drawing.Point(0, 149);
             this.btnPathRecordStop.Margin = new System.Windows.Forms.Padding(0);
             this.btnPathRecordStop.Name = "btnPathRecordStop";
             this.btnPathRecordStop.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -657,6 +661,27 @@
             this.btnPathRecordStop.UseVisualStyleBackColor = false;
             this.btnPathRecordStop.Click += new System.EventHandler(this.btnPathRecordStop_Click);
             // 
+            // btnResumePath
+            // 
+            this.btnResumePath.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnResumePath.BackColor = System.Drawing.Color.Transparent;
+            this.btnResumePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnResumePath.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnResumePath.FlatAppearance.BorderSize = 0;
+            this.btnResumePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResumePath.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResumePath.ForeColor = System.Drawing.Color.Red;
+            this.btnResumePath.Image = global::AgOpenGPS.Properties.Resources.pathResumeStart;
+            this.btnResumePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnResumePath.Location = new System.Drawing.Point(0, 76);
+            this.btnResumePath.Margin = new System.Windows.Forms.Padding(0);
+            this.btnResumePath.Name = "btnResumePath";
+            this.btnResumePath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnResumePath.Size = new System.Drawing.Size(64, 64);
+            this.btnResumePath.TabIndex = 472;
+            this.btnResumePath.UseVisualStyleBackColor = false;
+            this.btnResumePath.Click += new System.EventHandler(this.btnResumePath_Click);
+            // 
             // btnResetSim
             // 
             this.btnResetSim.BackColor = System.Drawing.Color.Transparent;
@@ -664,7 +689,7 @@
             this.btnResetSim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetSim.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnResetSim.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnResetSim.Location = new System.Drawing.Point(543, 4);
+            this.btnResetSim.Location = new System.Drawing.Point(545, 4);
             this.btnResetSim.Name = "btnResetSim";
             this.btnResetSim.Size = new System.Drawing.Size(50, 31);
             this.btnResetSim.TabIndex = 164;
@@ -679,9 +704,9 @@
             this.btnResetSteerAngle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetSteerAngle.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnResetSteerAngle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnResetSteerAngle.Location = new System.Drawing.Point(488, 4);
+            this.btnResetSteerAngle.Location = new System.Drawing.Point(492, 4);
             this.btnResetSteerAngle.Name = "btnResetSteerAngle";
-            this.btnResetSteerAngle.Size = new System.Drawing.Size(44, 31);
+            this.btnResetSteerAngle.Size = new System.Drawing.Size(43, 31);
             this.btnResetSteerAngle.TabIndex = 162;
             this.btnResetSteerAngle.Text = ">0<";
             this.btnResetSteerAngle.UseVisualStyleBackColor = false;
@@ -704,10 +729,10 @@
             this.hsbarSteerAngle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hsbarSteerAngle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.hsbarSteerAngle.LargeChange = 20;
-            this.hsbarSteerAngle.Location = new System.Drawing.Point(276, 1);
+            this.hsbarSteerAngle.Location = new System.Drawing.Point(278, 1);
             this.hsbarSteerAngle.Maximum = 800;
             this.hsbarSteerAngle.Name = "hsbarSteerAngle";
-            this.hsbarSteerAngle.Size = new System.Drawing.Size(208, 37);
+            this.hsbarSteerAngle.Size = new System.Drawing.Size(210, 37);
             this.hsbarSteerAngle.TabIndex = 179;
             this.hsbarSteerAngle.Value = 400;
             this.hsbarSteerAngle.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarSteerAngle_Scroll);
@@ -720,7 +745,7 @@
             this.hsbarStepDistance.Location = new System.Drawing.Point(1, 1);
             this.hsbarStepDistance.Minimum = -25;
             this.hsbarStepDistance.Name = "hsbarStepDistance";
-            this.hsbarStepDistance.Size = new System.Drawing.Size(208, 37);
+            this.hsbarStepDistance.Size = new System.Drawing.Size(210, 37);
             this.hsbarStepDistance.TabIndex = 178;
             this.hsbarStepDistance.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarStepDistance_Scroll);
             // 
@@ -947,10 +972,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.oglMain.BackColor = System.Drawing.Color.Black;
             this.oglMain.ContextMenuStrip = this.contextMenuStripOpenGL;
-            this.oglMain.Location = new System.Drawing.Point(75, 59);
+            this.oglMain.Location = new System.Drawing.Point(75, 58);
             this.oglMain.Margin = new System.Windows.Forms.Padding(0);
             this.oglMain.Name = "oglMain";
-            this.oglMain.Size = new System.Drawing.Size(753, 575);
+            this.oglMain.Size = new System.Drawing.Size(753, 574);
             this.oglMain.TabIndex = 180;
             this.oglMain.VSync = false;
             this.oglMain.Load += new System.EventHandler(this.oglMain_Load);
@@ -1253,7 +1278,8 @@
             this.steerChartStripMenu,
             this.webcamToolStrip,
             this.offsetFixToolStrip,
-            this.angleChartToolStripMenuItem});
+            this.angleChartToolStripMenuItem,
+            this.correctionToolStrip});
             this.toolStripDropDownButton4.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripDropDownButton4.Image = global::AgOpenGPS.Properties.Resources.SpecialFunctions;
             this.toolStripDropDownButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -1328,6 +1354,13 @@
             this.angleChartToolStripMenuItem.Size = new System.Drawing.Size(426, 70);
             this.angleChartToolStripMenuItem.Text = "Heading Chart";
             this.angleChartToolStripMenuItem.Click += new System.EventHandler(this.headingChartToolStripMenuItem_Click);
+            // 
+            // correctionToolStrip
+            // 
+            this.correctionToolStrip.Name = "correctionToolStrip";
+            this.correctionToolStrip.Size = new System.Drawing.Size(426, 70);
+            this.correctionToolStrip.Text = "Roll & Easting";
+            this.correctionToolStrip.Click += new System.EventHandler(this.correctionToolStrip_Click);
             // 
             // toolStripBtnField
             // 
@@ -1411,8 +1444,8 @@
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.panelSim.Controls.Add(this.btnResetSteerAngle, 3, 0);
             this.panelSim.Controls.Add(this.hsbarSteerAngle, 2, 0);
@@ -1436,7 +1469,7 @@
             this.btnSimSetSpeedToZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSimSetSpeedToZero.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnSimSetSpeedToZero.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSimSetSpeedToZero.Location = new System.Drawing.Point(213, 4);
+            this.btnSimSetSpeedToZero.Location = new System.Drawing.Point(215, 4);
             this.btnSimSetSpeedToZero.Name = "btnSimSetSpeedToZero";
             this.btnSimSetSpeedToZero.Size = new System.Drawing.Size(59, 31);
             this.btnSimSetSpeedToZero.TabIndex = 453;
@@ -1967,9 +2000,9 @@
             this.lblInty.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInty.Location = new System.Drawing.Point(11, 610);
             this.lblInty.Name = "lblInty";
-            this.lblInty.Size = new System.Drawing.Size(49, 16);
+            this.lblInty.Size = new System.Drawing.Size(15, 16);
             this.lblInty.TabIndex = 485;
-            this.lblInty.Text = "-1.123";
+            this.lblInty.Text = "0";
             this.lblInty.Click += new System.EventHandler(this.lblInty_Click);
             // 
             // lblCurveLineName
@@ -2125,9 +2158,9 @@
             this.pictureboxStart.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.pictureboxStart.BackgroundImage = global::AgOpenGPS.Properties.Resources.first;
             this.pictureboxStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureboxStart.Location = new System.Drawing.Point(748, 482);
+            this.pictureboxStart.Location = new System.Drawing.Point(714, 458);
             this.pictureboxStart.Name = "pictureboxStart";
-            this.pictureboxStart.Size = new System.Drawing.Size(40, 36);
+            this.pictureboxStart.Size = new System.Drawing.Size(74, 60);
             this.pictureboxStart.TabIndex = 473;
             this.pictureboxStart.TabStop = false;
             // 
@@ -2352,7 +2385,7 @@
         private System.Windows.Forms.ToolStripDropDownButton distanceToolBtn;
         public System.Windows.Forms.Button btnDayNightMode;
         public System.Windows.Forms.Button btnStartAgIO;
-        public System.Windows.Forms.Button btnPathDelete;
+        public System.Windows.Forms.Button btnPickPath;
         public System.Windows.Forms.Button btnPathRecordStop;
         public System.Windows.Forms.Button btnPathGoStop;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton4;
@@ -2409,6 +2442,8 @@
         private System.Windows.Forms.ToolStripMenuItem sectionColorToolStripMenuItem;
         private System.Windows.Forms.Button btnEditAB;
         private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.ToolStripMenuItem correctionToolStrip;
+        public System.Windows.Forms.Button btnResumePath;
     }
 }
 
