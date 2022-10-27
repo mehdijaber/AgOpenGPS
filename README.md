@@ -1,7 +1,8 @@
 
 # AgOpenGPS  ****  Guidance software - Fork for Linux
 
-This is a first attemt to make AOG operate under Linux OS. There's still a lot of work to to...
+This is a first attemt to make AOG operate under Linux OS. There's still a lot of work to do...
+
 see https://github.com/users/mehdijaber/projects/2 for the tasks to be done
 
 
