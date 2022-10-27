@@ -8,7 +8,7 @@ Install packages `mono-devel` and `msbuild`
 Go to directory "SourceCode", and run `msbuild AgOpenGPS.sln` to compile the program
 Go to directory "AgOpenGPS_v5" and run `mono AgOpenGPS.exe` to run the program once compiled
 
-*** Important ****
+# *** Important ****
 
 If you distribute copies of such a program, whether
 gratis or for a fee, you must pass on to the recipients the same
