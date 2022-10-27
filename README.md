@@ -1,6 +1,10 @@
 
 # AgOpenGPS  ****  Guidance software - Fork for Linux
 
+This is a first attemt to make AOG operate under Linux OS. There's still a lot of work to to...
+see https://github.com/users/mehdijaber/projects/2 for the tasks to be done
+
+
 ## How to use
 
 Install packages `mono-devel` and `msbuild`
